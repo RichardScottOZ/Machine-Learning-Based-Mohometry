@@ -133,7 +133,11 @@ def plot_kernel_ridge_regression(df, output_path, dpi=300):
     """Plot kernel ridge regression trend with confidence intervals."""
     print("Generating kernel ridge regression plot...")
     
-    plt.rcParams['font.family'] = 'Times New Roman'
+    # Try to use Times New Roman, fall back to default if not available
+    try:
+        plt.rcParams['font.family'] = 'Times New Roman'
+    except Exception:
+        pass  # Use default font if Times New Roman is not available
     
     # Group by Age, Latitude, and Longitude
     grouped = df.groupby(['Age', 'Lat', 'Lon'])['Predicted_Crustal_Thickness'].agg(['median', 'std']).reset_index()
@@ -216,7 +220,11 @@ def plot_spatial_correlation(df, output_path, dpi=300):
     """Plot spatial correlation between age, lat/lon, and crustal thickness."""
     print("Generating spatial correlation plots...")
     
-    plt.rcParams['font.family'] = 'Times New Roman'
+    # Try to use Times New Roman, fall back to default if not available
+    try:
+        plt.rcParams['font.family'] = 'Times New Roman'
+    except Exception:
+        pass  # Use default font if Times New Roman is not available
     
     # Compute median and std for each combination
     grouped = df.groupby(['Age', 'Lat', 'Lon'])['Predicted_Crustal_Thickness'].agg(['median', 'std']).reset_index()

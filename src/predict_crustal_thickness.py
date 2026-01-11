@@ -174,10 +174,13 @@ def train_model(args):
         print(f"  Training fold {fold_idx + 1}/{args.cv_folds}...")
         x_train, x_test = x_scaled[train_index], x_scaled[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        best_regr.fit(x_train, y_train.ravel(),
+        
+        # Create a new model instance for each fold to ensure clean state
+        fold_regr = CatBoostRegressor(**best_params, verbose=0)
+        fold_regr.fit(x_train, y_train.ravel(),
                      eval_set=(x_test, y_test),
                      early_stopping_rounds=50)
-        y_predict[test_index] = best_regr.predict(x_test)
+        y_predict[test_index] = fold_regr.predict(x_test)
     
     # Evaluate the model
     r2_test = r2_score(y, y_predict)
@@ -192,6 +195,7 @@ def train_model(args):
     
     # Train final model on all data
     print("\nTraining final model on all data...")
+    best_regr = CatBoostRegressor(**best_params, verbose=0)
     best_regr.fit(x_scaled, y.ravel())
     
     # Save model and scaler
