@@ -2,6 +2,33 @@
 
 The paleo-crustal thickness estimation and validation workflows from Zhou, J., Farahbakhsh, E., Williams, S., Li, X., Liu, Y., Li, S., & Müller, R. D. (2025). Machine learning and big data mining reveal Earth's deep time crustal thickness and tectonic evolution: A new chemical mohometry approach. Journal of Geophysical Research: Solid Earth, 130, e2024JB030404. https://doi.org/10.1029/2024JB030404.
 
+This repository contains:
+- **Jupyter notebooks** for interactive analysis (original version)
+- **Python scripts** (`src/` directory) for containerized/batch execution (NEW!)
+
+## 🚀 Containerized Version (AWS Batch, Docker)
+
+**NEW:** This repository now includes containerized Python scripts suitable for AWS Batch, Kubernetes, or any Docker-based workflow. See **[CONTAINER_README.md](CONTAINER_README.md)** for detailed instructions on:
+- Building and running Docker containers
+- Deploying to AWS Batch
+- Using the command-line scripts locally
+- Example workflows with S3 and cloud storage
+
+Quick start:
+```bash
+# Build container
+docker build -t mohometry:latest .
+
+# Train a model
+docker run -v $(pwd)/data:/data -v $(pwd)/output:/output mohometry:latest train \
+  --train-data /data/Model_1.csv --output /output/models
+
+# See examples.sh for more usage examples
+./examples.sh
+```
+
+## 📓 Interactive Notebooks (Original Version)
+
 This repository contains two Jupyter notebooks designed to work with Paleo crustal thickness data. One script focuses on machine learning-based predictions of crustal thickness, and the other focuses on visualizing its spatial and temporal evolution.
 
 ## Table of Contents
